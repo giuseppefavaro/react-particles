@@ -122,6 +122,7 @@ function App() {
 
     const [particlesOptions, setParticlesOptions] = useState(particles);
     const [inputColor, setInputColor] = useState("");
+    const [inputSpeed, setInputSpeed] = useState(1);
 
     // console.log("Sovrascrivo", {...particlesOptions, particles: {...particles.particles, color: "blue"}});
 
@@ -138,12 +139,33 @@ function App() {
     }
 
 
+    function changeParticlesSpeed(e) {
+        setInputSpeed(e.target.value);
+    
+        return setParticlesOptions({
+          ...particles,
+          particles: {
+            ...particles.particles,
+            move: { ...particles.particles.move, speed: e.target.value * 2 },
+          },
+        });
+      }
+
+
 
     return (
         <div className="App">
-            <input type="color" value={inputColor} onChange={changeParticlesColor} />
-            {/* <button onClick={changeParticlesColor}>Set color</button> */}
-            <Particles options={particlesOptions} init={particlesInit}/>
+            <div className="controlWrapper">
+
+                <label htmlFor="color" id="color" name="color">Color</label>
+                <input value={inputColor} onChange={changeParticlesColor} id="color" type="color" />
+
+                <label htmlFor="range" id="range" name="range">Speed</label>
+                <input value={inputSpeed} onChange={changeParticlesSpeed} id="range" type="range" />
+
+                {/* <button onClick={changeParticlesColor}>Set color</button> */}
+                <Particles options={particlesOptions} init={particlesInit}/>
+            </div>
         </div>
     );
 }
