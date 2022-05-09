@@ -124,6 +124,7 @@ function App() {
     const [inputColor, setInputColor] = useState("#ffffff");
     const [inputSpeed, setInputSpeed] = useState(1);
     const [inputOpacity, setInputOpacity] = useState(1);
+    const [inputSize, setInputSize] = useState(3);
 
     // console.log("Sovrascrivo", {...particlesOptions, particles: {...particles.particles, color: "blue"}});
 
@@ -154,19 +155,32 @@ function App() {
 
 
     const changeParticlesOpacity = (e) => {
-        console.log(e.target.value);
+        console.log(e.target.value / 100);
 
         setInputOpacity(e.target.value);
         return setParticlesOptions({
             ...particles,
             particles: { 
                 ...particles.particles,
-                opacity: { ...particles.particles.opacity, value: parseInt(e.target.value) },
+                opacity: { ...particles.particles.opacity, value: e.target.value / 100 },
             }
           })
-
     }
-    console.log(particles)
+
+
+    const changeParticlesSize = (e) => {
+        console.log(e.target.value);
+
+        setInputSize(e.target.value);
+        return setParticlesOptions({
+            ...particles,
+            particles: { 
+                ...particles.particles,
+                size: { ...particles.particles.size, value: parseInt(e.target.value) },
+            }
+          })
+    }
+
 
 
     return (
@@ -180,7 +194,10 @@ function App() {
                 <input type="range" value={inputSpeed} onChange={changeParticlesSpeed} id="range" />
 
                 <label htmlFor="opacity" id="opacity" name="opacity">Opacity</label>
-                <input type="range" value={inputOpacity} onChange={changeParticlesOpacity} min="0" max="1" step="0.1" id="opacity" />
+                <input type="range" value={inputOpacity} onChange={changeParticlesOpacity} min="0" max="100" step="1" id="opacity" />
+
+                <label htmlFor="size" id="size" name="size">Size</label>
+                <input type="range" value={inputSize} onChange={changeParticlesSize} min="0" max="50" step="1" id="size" />
 
                 {/* <button onClick={changeParticlesColor}>Set color</button> */}
                 <Particles options={particlesOptions} init={particlesInit}/>
