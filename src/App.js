@@ -121,8 +121,9 @@ function App() {
     }, [])
 
     const [particlesOptions, setParticlesOptions] = useState(particles);
-    const [inputColor, setInputColor] = useState("");
+    const [inputColor, setInputColor] = useState("#ffffff");
     const [inputSpeed, setInputSpeed] = useState(1);
+    const [inputOpacity, setInputOpacity] = useState(1);
 
     // console.log("Sovrascrivo", {...particlesOptions, particles: {...particles.particles, color: "blue"}});
 
@@ -139,7 +140,7 @@ function App() {
     }
 
 
-    function changeParticlesSpeed(e) {
+    const changeParticlesSpeed = (e) => {
         setInputSpeed(e.target.value);
     
         return setParticlesOptions({
@@ -152,6 +153,21 @@ function App() {
       }
 
 
+    const changeParticlesOpacity = (e) => {
+        console.log(e.target.value);
+
+        setInputOpacity(e.target.value);
+        return setParticlesOptions({
+            ...particles,
+            particles: { 
+                ...particles.particles,
+                opacity: { ...particles.particles.opacity, value: parseInt(e.target.value) },
+            }
+          })
+
+    }
+    console.log(particles)
+
 
     return (
         <div className="App">
@@ -161,7 +177,10 @@ function App() {
                 <input value={inputColor} onChange={changeParticlesColor} id="color" type="color" />
 
                 <label htmlFor="range" id="range" name="range">Speed</label>
-                <input value={inputSpeed} onChange={changeParticlesSpeed} id="range" type="range" />
+                <input type="range" value={inputSpeed} onChange={changeParticlesSpeed} id="range" />
+
+                <label htmlFor="opacity" id="opacity" name="opacity">Opacity</label>
+                <input type="range" value={inputOpacity} onChange={changeParticlesOpacity} min="0" max="1" step="0.1" id="opacity" />
 
                 {/* <button onClick={changeParticlesColor}>Set color</button> */}
                 <Particles options={particlesOptions} init={particlesInit}/>
