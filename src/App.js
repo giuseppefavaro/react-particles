@@ -125,6 +125,7 @@ function App() {
     const [inputSpeed, setInputSpeed] = useState(1);
     const [inputOpacity, setInputOpacity] = useState(1);
     const [inputSize, setInputSize] = useState(3);
+    const [inputAttract, setInputAttract] = useState(true);
 
     // console.log("Sovrascrivo", {...particlesOptions, particles: {...particles.particles, color: "blue"}});
 
@@ -155,7 +156,7 @@ function App() {
 
 
     const changeParticlesOpacity = (e) => {
-        console.log(e.target.value / 100);
+        // console.log(e.target.value / 100);
 
         setInputOpacity(e.target.value);
         return setParticlesOptions({
@@ -169,7 +170,7 @@ function App() {
 
 
     const changeParticlesSize = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
 
         setInputSize(e.target.value);
         return setParticlesOptions({
@@ -183,6 +184,21 @@ function App() {
 
 
 
+    const changeParticlesAttract = (e) => {
+        // console.log(e.target.value);
+
+        setInputAttract(e.target.value);
+        return setParticlesOptions({
+            ...particles,
+            particles: { 
+                ...particles.particles,
+                move: { ...particles.particles.move, attract: { ...particles.particles.move.attract, enable: !inputAttract } },
+            }
+          })
+    }
+
+
+
     return (
         <div className="App">
             <div className="controlWrapper">
@@ -190,14 +206,17 @@ function App() {
                 <label htmlFor="color" id="color" name="color">Color</label>
                 <input value={inputColor} onChange={changeParticlesColor} id="color" type="color" />
 
-                <label htmlFor="range" id="range" name="range">Speed</label>
-                <input type="range" value={inputSpeed} onChange={changeParticlesSpeed} id="range" />
+                <label htmlFor="speed" id="speed" name="speed">Speed</label>
+                <input type="range" value={inputSpeed} onChange={changeParticlesSpeed} id="speed" />
 
                 <label htmlFor="opacity" id="opacity" name="opacity">Opacity</label>
                 <input type="range" value={inputOpacity} onChange={changeParticlesOpacity} min="0" max="100" step="1" id="opacity" />
 
                 <label htmlFor="size" id="size" name="size">Size</label>
                 <input type="range" value={inputSize} onChange={changeParticlesSize} min="0" max="50" step="1" id="size" />
+
+                <label htmlFor="attract" id="attract" name="attract">Attract</label>
+                <input type="checkbox" value={inputAttract} onChange={changeParticlesAttract} id="attract" />
 
                 {/* <button onClick={changeParticlesColor}>Set color</button> */}
                 <Particles options={particlesOptions} init={particlesInit}/>
